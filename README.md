@@ -1,5 +1,7 @@
 # Colorful Image Colorization for Ikomia
 
+![](https://blog.ikomia.com/wp-content/uploads/2021/02/colorization.jpg)
+
 This plugin is based on [richzhang project](https://github.com/richzhang/colorization).
 
 It provides a ready to use method to do automatic colorization using Ikomia software and deep neural networks.
