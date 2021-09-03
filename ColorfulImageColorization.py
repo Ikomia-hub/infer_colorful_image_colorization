@@ -1,6 +1,4 @@
 from ikomia import dataprocess
-import ColorfulImageColorization_process as processMod
-import ColorfulImageColorization_widget as widgetMod
 
 
 # --------------------
@@ -13,9 +11,11 @@ class ColorfulImageColorization(dataprocess.CPluginProcessInterface):
         dataprocess.CPluginProcessInterface.__init__(self)
 
     def getProcessFactory(self):
+        from ColorfulImageColorization.ColorfulImageColorization_process import ColorfulImageColorizationProcessFactory
         # Instantiate process object
-        return processMod.ColorfulImageColorizationProcessFactory()
+        return ColorfulImageColorizationProcessFactory()
 
     def getWidgetFactory(self):
+        from ColorfulImageColorization.ColorfulImageColorization_widget import ColorfulImageColorizationWidgetFactory
         # Instantiate associated widget object
-        return widgetMod.ColorfulImageColorizationWidgetFactory()
+        return ColorfulImageColorizationWidgetFactory()

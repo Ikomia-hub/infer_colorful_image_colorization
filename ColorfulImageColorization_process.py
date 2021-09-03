@@ -1,6 +1,5 @@
 from ikomia import core, dataprocess
 import copy
-# Your imports below
 import numpy as np
 import cv2
 import os
@@ -10,16 +9,16 @@ import os
 # - Class to handle the process parameters
 # - Inherits PyCore.CProtocolTaskParam from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcessParam(core.CProtocolTaskParam):
+class ColorfulImageColorizationProcessParam(core.CWorkflowTaskParam):
 
     def __init__(self):
-        core.CProtocolTaskParam.__init__(self)
+        core.CWorkflowTaskParam.__init__(self)
         # Place default value initialization here
         self.update = False
         self.backend = cv2.dnn.DNN_BACKEND_DEFAULT
         self.target = cv2.dnn.DNN_TARGET_CPU
 
-    def setParamMap(self, paramMap):
+    def setParamMap(self, param_map):
         # Set parameters values from Ikomia application
         # Parameters values are stored as string and accessible like a python dict
         pass
@@ -27,23 +26,23 @@ class ColorfulImageColorizationProcessParam(core.CProtocolTaskParam):
     def getParamMap(self):
         # Send parameters values to Ikomia application
         # Create the specific dict structure (string container)
-        paramMap = core.ParamMap()
-        return paramMap
+        param_map = core.ParamMap()
+        return param_map
 
 
 # --------------------
 # - Class which implements the process
 # - Inherits PyCore.CProtocolTask or derived from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcess(dataprocess.CImageProcess2d):
+class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
 
     def __init__(self, name, param):
-        dataprocess.CImageProcess2d.__init__(self, name)
+        dataprocess.C2dImageTask.__init__(self, name)
         self.net = None
         self.pts_in_hull = np.load(os.path.dirname(os.path.realpath(__file__)) + "/model/pts_in_hull.npy")
         self.pts_in_hull = self.pts_in_hull.transpose().reshape(2, 313, 1, 1)
 
-        #Create parameters class
+        # Create parameters class
         if param is None:
             self.setParam(ColorfulImageColorizationProcessParam())
         else:
@@ -136,10 +135,10 @@ class ColorfulImageColorizationProcess(dataprocess.CImageProcess2d):
 # - Factory class to build process object
 # - Inherits PyDataProcess.CProcessFactory from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcessFactory(dataprocess.CProcessFactory):
+class ColorfulImageColorizationProcessFactory(dataprocess.CTaskFactory):
 
     def __init__(self):
-        dataprocess.CProcessFactory.__init__(self)
+        dataprocess.CTaskFactory.__init__(self)
         # Set process information as string here
         self.info.name = "Colorful Image Colorization"
         self.info.shortDescription = "Automatic colorization of grayscale image based on neural network."

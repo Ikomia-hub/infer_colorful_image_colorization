@@ -1,8 +1,8 @@
 from ikomia import utils, core, dataprocess
-import ColorfulImageColorization_process as processMod
+from ikomia.utils import qtconversion
+from ColorfulImageColorization.ColorfulImageColorization_process import ColorfulImageColorizationProcessParam
 import cv2
-
-#PyQt GUI framework
+# PyQt GUI framework
 from PyQt5.QtWidgets import *
 
 
@@ -40,13 +40,13 @@ backend_targets = {
 # - Class which implements widget associated with the process
 # - Inherits PyCore.CProtocolTaskWidget from Ikomia API
 # --------------------
-class ColorfulImageColorizationWidget(core.CProtocolTaskWidget):
+class ColorfulImageColorizationWidget(core.CWorkflowTaskWidget):
 
     def __init__(self, param, parent):
-        core.CProtocolTaskWidget.__init__(self, parent)
+        core.CWorkflowTaskWidget.__init__(self, parent)
 
         if param is None:
-            self.parameters = processMod.ColorfulImageColorizationProcessParam()
+            self.parameters = ColorfulImageColorizationProcessParam()
         else:
             self.parameters = param
 
@@ -76,7 +76,7 @@ class ColorfulImageColorizationWidget(core.CProtocolTaskWidget):
         self.grid_layout.addWidget(self.combo_target, 1, 1, 1, 1)
 
         # PyQt -> Qt wrapping
-        layout_ptr = utils.PyQtToQt(self.grid_layout)
+        layout_ptr = qtconversion.PyQtToQt(self.grid_layout)
 
         # Set widget layout
         self.setLayout(layout_ptr)
@@ -110,10 +110,10 @@ class ColorfulImageColorizationWidget(core.CProtocolTaskWidget):
         self.emitApply(self.parameters)
 
 
-#--------------------
-#- Factory class to build process widget object
-#- Inherits PyDataProcess.CWidgetFactory from Ikomia API
-#--------------------
+# --------------------
+# - Factory class to build process widget object
+# - Inherits PyDataProcess.CWidgetFactory from Ikomia API
+# --------------------
 class ColorfulImageColorizationWidgetFactory(dataprocess.CWidgetFactory):
 
     def __init__(self):
