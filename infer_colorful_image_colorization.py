@@ -5,17 +5,17 @@ from ikomia import dataprocess
 # - Interface class to integrate the process with Ikomia application
 # - Inherits PyDataProcess.CPluginProcessInterface from Ikomia API
 # --------------------
-class ColorfulImageColorization(dataprocess.CPluginProcessInterface):
+class IkomiaPlugin(dataprocess.CPluginProcessInterface):
 
     def __init__(self):
         dataprocess.CPluginProcessInterface.__init__(self)
 
     def getProcessFactory(self):
-        from ColorfulImageColorization.ColorfulImageColorization_process import ColorfulImageColorizationProcessFactory
+        from infer_colorful_image_colorization.infer_colorful_image_colorization_process import ColorfulImageColorizationFactory
         # Instantiate process object
-        return ColorfulImageColorizationProcessFactory()
+        return ColorfulImageColorizationFactory()
 
     def getWidgetFactory(self):
-        from ColorfulImageColorization.ColorfulImageColorization_widget import ColorfulImageColorizationWidgetFactory
+        from infer_colorful_image_colorization.infer_colorful_image_colorization_widget import ColorfulImageColorizationWidgetFactory
         # Instantiate associated widget object
         return ColorfulImageColorizationWidgetFactory()

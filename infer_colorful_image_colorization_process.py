@@ -9,7 +9,7 @@ import os
 # - Class to handle the process parameters
 # - Inherits PyCore.CProtocolTaskParam from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcessParam(core.CWorkflowTaskParam):
+class ColorfulImageColorizationParam(core.CWorkflowTaskParam):
 
     def __init__(self):
         core.CWorkflowTaskParam.__init__(self)
@@ -34,7 +34,7 @@ class ColorfulImageColorizationProcessParam(core.CWorkflowTaskParam):
 # - Class which implements the process
 # - Inherits PyCore.CProtocolTask or derived from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
+class ColorfulImageColorization(dataprocess.C2dImageTask):
 
     def __init__(self, name, param):
         dataprocess.C2dImageTask.__init__(self, name)
@@ -44,7 +44,7 @@ class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
 
         # Create parameters class
         if param is None:
-            self.setParam(ColorfulImageColorizationProcessParam())
+            self.setParam(ColorfulImageColorizationParam())
         else:
             self.setParam(copy.deepcopy(param))
 
@@ -87,14 +87,14 @@ class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
 
         img_lab = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2Lab)
         # Pull out L channel
-        img_l = img_lab[:,:,0] 
+        img_l = img_lab[:, :, 0]
         # Original image size
-        (height,width) = img_rgb.shape[:2]
+        (height, width) = img_rgb.shape[:2]
 
         # Resize image to network input size
         img_rs = cv2.resize(img_rgb, (width_in, height_in))
         img_lab_rs = cv2.cvtColor(img_rs, cv2.COLOR_RGB2Lab)
-        img_l_rs = img_lab_rs[:,:,0]
+        img_l_rs = img_lab_rs[:, :, 0]
         # Subtract 50 for mean-centering
         img_l_rs -= 50
 
@@ -111,7 +111,7 @@ class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
         self.emitStepProgress()
 
         # Concatenate with original image L
-        img_lab_out = np.concatenate((img_l[:,:,np.newaxis], ab_dec_us), axis=2) 
+        img_lab_out = np.concatenate((img_l[:, :, np.newaxis], ab_dec_us), axis=2)
         img_rgb_out = np.clip(cv2.cvtColor(img_lab_out, cv2.COLOR_Lab2RGB), 0, 1)
 
         # Get task output :
@@ -135,12 +135,12 @@ class ColorfulImageColorizationProcess(dataprocess.C2dImageTask):
 # - Factory class to build process object
 # - Inherits PyDataProcess.CProcessFactory from Ikomia API
 # --------------------
-class ColorfulImageColorizationProcessFactory(dataprocess.CTaskFactory):
+class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
 
     def __init__(self):
         dataprocess.CTaskFactory.__init__(self)
         # Set process information as string here
-        self.info.name = "Colorful Image Colorization"
+        self.info.name = "infer_colorful_image_colorization"
         self.info.shortDescription = "Automatic colorization of grayscale image based on neural network."
         self.info.description = "Given a grayscale photograph as input, " \
                                 "this paper attacks the problem of hallucinating " \
@@ -170,4 +170,4 @@ class ColorfulImageColorizationProcessFactory(dataprocess.CTaskFactory):
 
     def create(self, param=None):
         # Create process object
-        return ColorfulImageColorizationProcess(self.info.name, param)
+        return ColorfulImageColorization(self.info.name, param)

@@ -1,6 +1,6 @@
 from ikomia import utils, core, dataprocess
 from ikomia.utils import qtconversion
-from ColorfulImageColorization.ColorfulImageColorization_process import ColorfulImageColorizationProcessParam
+from infer_colorful_image_colorization.infer_colorful_image_colorization_process import ColorfulImageColorizationParam
 import cv2
 # PyQt GUI framework
 from PyQt5.QtWidgets import *
@@ -46,7 +46,7 @@ class ColorfulImageColorizationWidget(core.CWorkflowTaskWidget):
         core.CWorkflowTaskWidget.__init__(self, parent)
 
         if param is None:
-            self.parameters = ColorfulImageColorizationProcessParam()
+            self.parameters = ColorfulImageColorizationParam()
         else:
             self.parameters = param
 
@@ -119,7 +119,7 @@ class ColorfulImageColorizationWidgetFactory(dataprocess.CWidgetFactory):
     def __init__(self):
         dataprocess.CWidgetFactory.__init__(self)
         # Set the name of the process -> it must be the same as the one declared in the process factory class
-        self.name = "Colorful Image Colorization"
+        self.name = "infer_colorful_image_colorization"
 
     def create(self, param):
         # Create widget object
