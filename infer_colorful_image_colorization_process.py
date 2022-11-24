@@ -1,4 +1,4 @@
-from ikomia import core, dataprocess
+from ikomia import utils, core, dataprocess
 import copy
 import numpy as np
 import cv2
@@ -71,6 +71,12 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
         if self.net is None or param.update == True:
             prototxt_path = os.path.dirname(os.path.realpath(__file__)) + "/model/colorizationV2.prototxt"
             model_path = os.path.dirname(os.path.realpath(__file__)) + "/model/colorizationV2.caffemodel"
+
+            if not os.path.exists(model_path):
+                print("Downloading model, please wait...")
+                model_url = utils.getModelHubUrl() + "/" + self.name + "/colorizationV2.caffemodel"
+                self.download(model_url, model_path)
+
             self.net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
             self.setup_colorization_layer()
             self.net.setPreferableBackend(param.backend)
@@ -166,7 +172,7 @@ class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
         self.info.path = "Plugins/Python/Colorization"
         self.info.iconPath = "icon/icon.png"
         self.info.keywords = "deep,learning,caffe,CNN,photo"
-        self.info.version = "1.0.0"
+        self.info.version = "1.1.0"
 
     def create(self, param=None):
         # Create process object
