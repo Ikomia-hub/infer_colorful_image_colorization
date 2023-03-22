@@ -10,12 +10,12 @@ class IkomiaPlugin(dataprocess.CPluginProcessInterface):
     def __init__(self):
         dataprocess.CPluginProcessInterface.__init__(self)
 
-    def getProcessFactory(self):
+    def get_process_factory(self):
         from infer_colorful_image_colorization.infer_colorful_image_colorization_process import ColorfulImageColorizationFactory
         # Instantiate process object
         return ColorfulImageColorizationFactory()
 
-    def getWidgetFactory(self):
+    def get_widget_factory(self):
         from infer_colorful_image_colorization.infer_colorful_image_colorization_widget import ColorfulImageColorizationWidgetFactory
         # Instantiate associated widget object
         return ColorfulImageColorizationWidgetFactory()

@@ -79,7 +79,7 @@ class ColorfulImageColorizationWidget(core.CWorkflowTaskWidget):
         layout_ptr = qtconversion.PyQtToQt(self.grid_layout)
 
         # Set widget layout
-        self.setLayout(layout_ptr)
+        self.set_layout(layout_ptr)
 
     def fill_combo_backend(self):
         for backend in backend_names:            
@@ -100,14 +100,14 @@ class ColorfulImageColorizationWidget(core.CWorkflowTaskWidget):
     def on_param_changed(self, index):
         self.param_changed = True
 
-    def onApply(self):
+    def on_apply(self):
         # Apply button has been pressed
         # Get parameters from widget
         self.parameters.update = self.param_changed
         self.parameters.backend = self.combo_backend.currentData()
         self.parameters.target = self.combo_target.currentData()
         # Send signal to launch the process
-        self.emitApply(self.parameters)
+        self.emit_apply(self.parameters)
 
 
 # --------------------

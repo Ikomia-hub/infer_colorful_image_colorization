@@ -18,15 +18,15 @@ class ColorfulImageColorizationParam(core.CWorkflowTaskParam):
         self.backend = cv2.dnn.DNN_BACKEND_DEFAULT
         self.target = cv2.dnn.DNN_TARGET_CPU
 
-    def setParamMap(self, param_map):
+    def set_values(self, param_map):
         # Set parameters values from Ikomia application
         # Parameters values are stored as string and accessible like a python dict
         pass
 
-    def getParamMap(self):
+    def get_values(self):
         # Send parameters values to Ikomia application
         # Create the specific dict structure (string container)
-        param_map = core.ParamMap()
+        param_map = {}
         return param_map
 
 
@@ -44,28 +44,28 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
 
         # Create parameters class
         if param is None:
-            self.setParam(ColorfulImageColorizationParam())
+            self.set_param_object(ColorfulImageColorizationParam())
         else:
-            self.setParam(copy.deepcopy(param))
+            self.set_param_object(copy.deepcopy(param))
 
-    def getProgressSteps(self):
+    def get_progress_steps(self):
         # Function returning the number of progress steps for this process
         # This is handled by the main progress bar of Ikomia application
         return 3
 
     def run(self):
         # Core function of your process
-        # Call beginTaskRun for initialization
-        self.beginTaskRun()
+        # Call begin_task_run for initialization
+        self.begin_task_run()
 
         # Get input :
-        input_img = self.getInput(0)
-        src_img = input_img.getImage()
+        input_img = self.get_input(0)
+        src_img = input_img.get_image()
         width_in = 224
         height_in = 224
 
         # Get parameters :
-        param = self.getParam()
+        param = self.get_param_object()
 
         # Load the model from disk
         if self.net is None or param.update == True:
@@ -74,7 +74,7 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
 
             if not os.path.exists(model_path):
                 print("Downloading model, please wait...")
-                model_url = utils.getModelHubUrl() + "/" + self.name + "/colorizationV2.caffemodel"
+                model_url = utils.get_model_hub_url() + "/" + self.name + "/colorizationV2.caffemodel"
                 self.download(model_url, model_path)
 
             self.net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
@@ -105,7 +105,7 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
         img_l_rs -= 50
 
         # Step progress bar:
-        self.emitStepProgress()
+        self.emit_step_progress()
 
         # Set network input
         self.net.setInput(cv2.dnn.blobFromImage(img_l_rs))
@@ -114,23 +114,23 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
         ab_dec_us = cv2.resize(ab_dec, (width, height))
 
         # Step progress bar:
-        self.emitStepProgress()
+        self.emit_step_progress()
 
         # Concatenate with original image L
         img_lab_out = np.concatenate((img_l[:, :, np.newaxis], ab_dec_us), axis=2)
         img_rgb_out = np.clip(cv2.cvtColor(img_lab_out, cv2.COLOR_Lab2RGB), 0, 1)
 
         # Get task output :
-        output_img = self.getOutput(0)
+        output_img = self.get_output(0)
 
         # Set image of output (numpy array):
-        output_img.setImage(img_rgb_out)
+        output_img.set_image(img_rgb_out)
 
         # Step progress bar:
-        self.emitStepProgress()
+        self.emit_step_progress()
 
-        # Call endTaskRun to finalize process
-        self.endTaskRun()
+        # Call end_task_run to finalize process
+        self.end_task_run()
 
     def setup_colorization_layer(self):
         self.net.getLayer(self.net.getLayerId('class8_ab')).blobs = [self.pts_in_hull.astype(np.float32)]
@@ -147,7 +147,7 @@ class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
         dataprocess.CTaskFactory.__init__(self)
         # Set process information as string here
         self.info.name = "infer_colorful_image_colorization"
-        self.info.shortDescription = "Automatic colorization of grayscale image based on neural network."
+        self.info.short_description = "Automatic colorization of grayscale image based on neural network."
         self.info.description = "Given a grayscale photograph as input, " \
                                 "this paper attacks the problem of hallucinating " \
                                 "a plausible color version of the photograph. " \
@@ -165,14 +165,14 @@ class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
         self.info.article = "Colorful Image Colorization"
         self.info.journal = "ECCV"
         self.info.year = 2016
-        self.info.documentationLink = "https://richzhang.github.io/colorization/"
+        self.info.documentation_link = "https://richzhang.github.io/colorization/"
         self.info.license = "BSD 2-Clause 'Simplified' License"
         self.info.repository = "https://github.com/richzhang/colorization"
         # relative path -> as displayed in Ikomia application process tree
         self.info.path = "Plugins/Python/Colorization"
-        self.info.iconPath = "icon/icon.png"
+        self.info.icon_path = "icon/icon.png"
         self.info.keywords = "deep,learning,caffe,CNN,photo"
-        self.info.version = "1.1.0"
+        self.info.version = "1.2.0"
 
     def create(self, param=None):
         # Create process object
