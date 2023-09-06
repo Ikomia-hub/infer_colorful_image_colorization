@@ -1,23 +1,117 @@
-# Colorful Image Colorization for Ikomia
+<div align="center">
+  <img src="https://raw.githubusercontent.com/Ikomia-hub/infer_colorful_image_colorization/main/icon/icon.png" alt="Algorithm icon">
+  <h1 align="center">infer_colorful_image_colorization</h1>
+</div>
+<br />
+<p align="center">
+    <a href="https://github.com/Ikomia-hub/infer_colorful_image_colorization">
+        <img alt="Stars" src="https://img.shields.io/github/stars/Ikomia-hub/infer_colorful_image_colorization">
+    </a>
+    <a href="https://app.ikomia.ai/hub/">
+        <img alt="Website" src="https://img.shields.io/website/http/app.ikomia.ai/en.svg?down_color=red&down_message=offline&up_message=online">
+    </a>
+    <a href="https://github.com/Ikomia-hub/infer_colorful_image_colorization/blob/main/LICENSE.md">
+        <img alt="GitHub" src="https://img.shields.io/github/license/Ikomia-hub/infer_colorful_image_colorization.svg?color=blue">
+    </a>    
+    <br>
+    <a href="https://discord.com/invite/82Tnw9UGGc">
+        <img alt="Discord community" src="https://img.shields.io/badge/Discord-white?style=social&logo=discord">
+    </a> 
+</p>
 
-![](https://blog.ikomia.com/wp-content/uploads/2021/02/colorization.jpg)
+Given a grayscale photograph as input, this paper attacks the problem of hallucinating a plausible color version of the photograph. This problem is clearly underconstrained, so previous approaches have either relied on significant user interaction or resulted in desaturated colorizations. We propose a fully automatic approach that produces vibrant and realistic colorizations. We embrace the underlying uncertainty of the problem by posing it as a classification task and use class-rebalancing at training time to increase the diversity of colors in the result. The system is implemented as a feed-forward pass in a CNN at test time and is trained on over a million color images. We evaluate our algorithm using a “colorization Turing test,” asking human participants to choose between a generated and ground truth color image. Our method successfully fools humans on 32 % of the trials, significantly higher than previous methods. Moreover, we show that colorization can be a powerful pretext task for self-supervised feature learning, acting as a cross-channel encoder. This approach results in state-of-the-art performance on several feature learning benchmarks.
 
-This plugin is based on [richzhang project](https://github.com/richzhang/colorization).
+[Insert illustrative image here. Image must be accessible publicly, in algorithm Github repository for example.
+<img src="images/illustration.png"  alt="Illustrative image" width="30%" height="30%">]
 
-It provides a ready to use method to do automatic colorization using Ikomia software and deep neural networks.
+## :rocket: Use with Ikomia API
 
-### Trained model
-- [colorizationV2.caffemodel](http://eecs.berkeley.edu/~rich.zhang/projects/2016_colorization/files/demo_v2/colorization_release_v2.caffemodel)
+#### 1. Install Ikomia API
 
-### How to use it?
-Here are the steps:
+We strongly recommend using a virtual environment. If you're not sure where to start, we offer a tutorial [here](https://www.ikomia.ai/blog/a-step-by-step-guide-to-creating-virtual-environments-in-python).
 
-1. Create Ikomia account for free [here](https://ikomia.com/accounts/signup/) (if you don't have one)
-2. Install [Ikomia software](https://ikomia.com/en/download)
-3. Launch the software and log in with your credentials
-4. Open Ikomia Store and install Colorful Image Colorization plugin
-5. Open your images
-6. Add Colorful Image Colorization  algorithm to the workflow
-7. Start the workflow and evaluate the prediction
+```sh
+pip install ikomia
+```
 
-That's it!
+#### 2. Create your workflow
+
+[Change the sample image URL to fit algorithm purpose]
+
+```python
+import ikomia
+from ikomia.dataprocess.workflow import Workflow
+
+# Init your workflow
+wf = Workflow()
+
+# Add algorithm
+algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
+
+# Run on your image  
+wf.run_on(url="example_image.png")
+```
+
+## :sunny: Use with Ikomia Studio
+
+Ikomia Studio offers a friendly UI with the same features as the API.
+
+- If you haven't started using Ikomia Studio yet, download and install it from [this page](https://www.ikomia.ai/studio).
+
+- For additional guidance on getting started with Ikomia Studio, check out [this blog post](https://www.ikomia.ai/blog/how-to-get-started-with-ikomia-studio).
+
+## :pencil: Set algorithm parameters
+
+[Explain each algorithm parameters]
+
+[Change the sample image URL to fit algorithm purpose]
+
+```python
+import ikomia
+from ikomia.dataprocess.workflow import Workflow
+
+# Init your workflow
+wf = Workflow()
+
+# Add algorithm
+algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
+
+algo.set_parameters({
+    "param1": "value1",
+    "param2": "value2",
+    ...
+})
+
+# Run on your image  
+wf.run_on(url="example_image.png")
+
+```
+
+## :mag: Explore algorithm outputs
+
+Every algorithm produces specific outputs, yet they can be explored them the same way using the Ikomia API. For a more in-depth understanding of managing algorithm outputs, please refer to the [documentation](https://ikomia-dev.github.io/python-api-documentation/advanced_guide/IO_management.html).
+
+```python
+import ikomia
+from ikomia.dataprocess.workflow import Workflow
+
+# Init your workflow
+wf = Workflow()
+
+# Add algorithm
+algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
+
+# Run on your image  
+wf.run_on(url="example_image.png")
+
+# Iterate over outputs
+for output in algo.get_outputs()
+    # Print information
+    print(output)
+    # Export it to JSON
+    output.to_json()
+```
+
+## :fast_forward: Advanced usage 
+
+[optional]
