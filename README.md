@@ -21,8 +21,8 @@
 
 This algorithm enables the colorization of grayscale images using neural networks.
 
-[Insert illustrative image here. Image must be accessible publicly, in algorithm Github repository for example.
-<img src="https://raw.githubusercontent.com/Ikomia-hub/infer_colorful_image_colorization/main/icons/output.jpg"  alt="Illustrative image" width="50%" height="50%">]
+
+![input output colorization](https://raw.githubusercontent.com/Ikomia-hub/infer_colorful_image_colorization/main/icons/output.jpg)
 
 
 ## :rocket: Use with Ikomia API
