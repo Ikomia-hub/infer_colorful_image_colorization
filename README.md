@@ -19,10 +19,11 @@
     </a> 
 </p>
 
-Given a grayscale photograph as input, this paper attacks the problem of hallucinating a plausible color version of the photograph. This problem is clearly underconstrained, so previous approaches have either relied on significant user interaction or resulted in desaturated colorizations. We propose a fully automatic approach that produces vibrant and realistic colorizations. We embrace the underlying uncertainty of the problem by posing it as a classification task and use class-rebalancing at training time to increase the diversity of colors in the result. The system is implemented as a feed-forward pass in a CNN at test time and is trained on over a million color images. We evaluate our algorithm using a “colorization Turing test,” asking human participants to choose between a generated and ground truth color image. Our method successfully fools humans on 32 % of the trials, significantly higher than previous methods. Moreover, we show that colorization can be a powerful pretext task for self-supervised feature learning, acting as a cross-channel encoder. This approach results in state-of-the-art performance on several feature learning benchmarks.
+This algorithm enables the colorization of grayscale images using neural networks.
 
 [Insert illustrative image here. Image must be accessible publicly, in algorithm Github repository for example.
-<img src="images/illustration.png"  alt="Illustrative image" width="30%" height="30%">]
+<img src="https://raw.githubusercontent.com/Ikomia-hub/infer_colorful_image_colorization/main/icons/output.jpg"  alt="Illustrative image" width="50%" height="50%">]
+
 
 ## :rocket: Use with Ikomia API
 
@@ -39,8 +40,9 @@ pip install ikomia
 [Change the sample image URL to fit algorithm purpose]
 
 ```python
-import ikomia
 from ikomia.dataprocess.workflow import Workflow
+from ikomia.utils.displayIO import display
+
 
 # Init your workflow
 wf = Workflow()
@@ -49,7 +51,11 @@ wf = Workflow()
 algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 
 # Run on your image  
-wf.run_on(url="example_image.png")
+wf.run_on(url="https://images.pexels.com/photos/57905/pexels-photo-57905.jpeg")
+
+# Inspect your results
+display(algo.get_input(0).get_image())
+display(algo.get_output(0).get_image())
 ```
 
 ## :sunny: Use with Ikomia Studio
@@ -62,9 +68,10 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 
 ## :pencil: Set algorithm parameters
 
-[Explain each algorithm parameters]
+- **backend** (str) – default 'Default': Select run backend: "Default", Halide", "Inference engine", "OpenCV", "VKCOM", "CUDA".
 
-[Change the sample image URL to fit algorithm purpose]
+- **target** (str) – default 'CPU': Select run target "CPU", "OpenCL FP32", "OpenCL FP16", "MYRIAD", "VULKAN", "FPGA", "CUDA FP32", "CUDA FP16".
+
 
 ```python
 import ikomia
@@ -77,14 +84,16 @@ wf = Workflow()
 algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 
 algo.set_parameters({
-    "param1": "value1",
-    "param2": "value2",
-    ...
+    "backend": "Default",
+    "target": "CPU",
 })
 
 # Run on your image  
-wf.run_on(url="example_image.png")
+wf.run_on(url="https://images.pexels.com/photos/57905/pexels-photo-57905.jpeg")
 
+# Inspect your results
+display(algo.get_input(0).get_image())
+display(algo.get_output(0).get_image())
 ```
 
 ## :mag: Explore algorithm outputs
@@ -112,6 +121,4 @@ for output in algo.get_outputs()
     output.to_json()
 ```
 
-## :fast_forward: Advanced usage 
 
-[optional]
