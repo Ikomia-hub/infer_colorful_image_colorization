@@ -114,7 +114,7 @@ algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 wf.run_on(url="example_image.png")
 
 # Iterate over outputs
-for output in algo.get_outputs()
+for output in algo.get_outputs():
     # Print information
     print(output)
     # Export it to JSON
