@@ -22,7 +22,7 @@
 This algorithm enables the colorization of grayscale images using neural networks.
 
 
-![input output colorization](https://raw.githubusercontent.com/Ikomia-hub/infer_colorful_image_colorization/main/icons/output.jpg)
+![input output colorization](https://richzhang.github.io/colorization/resources/images/teaser3.jpg)
 
 
 ## :rocket: Use with Ikomia API
@@ -37,7 +37,6 @@ pip install ikomia
 
 #### 2. Create your workflow
 
-[Change the sample image URL to fit algorithm purpose]
 
 ```python
 from ikomia.dataprocess.workflow import Workflow
@@ -51,11 +50,10 @@ wf = Workflow()
 algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 
 # Run on your image  
-wf.run_on(url="https://images.pexels.com/photos/57905/pexels-photo-57905.jpeg")
+wf.run_on(url="https://github.com/sczhou/CodeFormer/blob/master/inputs/gray_faces/Hepburn02.png?raw=true")
 
-# Inspect your results
 display(algo.get_input(0).get_image())
-display(algo.get_output(0).get_image())
+display(algo.get_output(0))
 ```
 
 ## :sunny: Use with Ikomia Studio
@@ -74,8 +72,9 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 
 
 ```python
-import ikomia
 from ikomia.dataprocess.workflow import Workflow
+from ikomia.utils.displayIO import display
+
 
 # Init your workflow
 wf = Workflow()
@@ -89,11 +88,11 @@ algo.set_parameters({
 })
 
 # Run on your image  
-wf.run_on(url="https://images.pexels.com/photos/57905/pexels-photo-57905.jpeg")
+wf.run_on(url="https://github.com/sczhou/CodeFormer/blob/master/inputs/gray_faces/Hepburn02.png?raw=true")
 
 # Inspect your results
 display(algo.get_input(0).get_image())
-display(algo.get_output(0).get_image())
+display(algo.get_output(0))
 ```
 
 ## :mag: Explore algorithm outputs
@@ -111,7 +110,7 @@ wf = Workflow()
 algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 
 # Run on your image  
-wf.run_on(url="example_image.png")
+wf.run_on(url="https://github.com/sczhou/CodeFormer/blob/master/inputs/gray_faces/Hepburn02.png?raw=true")
 
 # Iterate over outputs
 for output in algo.get_outputs():
