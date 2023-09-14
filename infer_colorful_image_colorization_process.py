@@ -3,7 +3,7 @@ import copy
 import numpy as np
 import cv2
 import os
-
+import requests
 
 # --------------------
 # - Class to handle the process parameters
@@ -75,7 +75,12 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
             if not os.path.exists(model_path):
                 print("Downloading model, please wait...")
                 model_url = utils.get_model_hub_url() + "/" + self.name + "/colorizationV2.caffemodel"
-                self.download(model_url, model_path)
+                # self.download(model_url, model_path)
+                response = requests.get(model_url, stream=True)
+                with open(model_path, 'wb') as f:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        f.write(chunk)
+
 
             self.net = cv2.dnn.readNetFromCaffe(prototxt_path, model_path)
             self.setup_colorization_layer()
