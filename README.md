@@ -37,11 +37,9 @@ pip install ikomia
 
 #### 2. Create your workflow
 
-
 ```python
 from ikomia.dataprocess.workflow import Workflow
 from ikomia.utils.displayIO import display
-
 
 # Init your workflow
 wf = Workflow()
@@ -53,7 +51,7 @@ algo = wf.add_task(name="infer_colorful_image_colorization", auto_connect=True)
 wf.run_on(url="https://github.com/sczhou/CodeFormer/blob/master/inputs/gray_faces/Hepburn02.png?raw=true")
 
 display(algo.get_input(0).get_image())
-display(algo.get_output(0))
+display(algo.get_output(0).get_image())
 ```
 
 ## :sunny: Use with Ikomia Studio
@@ -75,7 +73,6 @@ Ikomia Studio offers a friendly UI with the same features as the API.
 from ikomia.dataprocess.workflow import Workflow
 from ikomia.utils.displayIO import display
 
-
 # Init your workflow
 wf = Workflow()
 
@@ -92,7 +89,7 @@ wf.run_on(url="https://github.com/sczhou/CodeFormer/blob/master/inputs/gray_face
 
 # Inspect your results
 display(algo.get_input(0).get_image())
-display(algo.get_output(0))
+display(algo.get_output(0).get_image())
 ```
 
 ## :mag: Explore algorithm outputs
