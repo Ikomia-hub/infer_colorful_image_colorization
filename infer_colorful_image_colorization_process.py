@@ -129,8 +129,11 @@ class ColorfulImageColorization(dataprocess.C2dImageTask):
         output_img = self.get_output(0)
 
         # Set image of output (numpy array):
-        output_img.set_image(img_rgb_out)
+        img_rgb_out = img_rgb_out * 255
+        img_rgb_out = img_rgb_out.astype(np.uint8)
 
+        output_img.set_image(img_rgb_out)
+      
         # Step progress bar:
         self.emit_step_progress()
 
