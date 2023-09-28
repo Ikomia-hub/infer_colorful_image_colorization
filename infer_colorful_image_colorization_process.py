@@ -156,26 +156,14 @@ class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
         # Set process information as string here
         self.info.name = "infer_colorful_image_colorization"
         self.info.short_description = "Automatic colorization of grayscale image based on neural network."
-        self.info.description = "Given a grayscale photograph as input, " \
-                                "this paper attacks the problem of hallucinating " \
-                                "a plausible color version of the photograph. " \
-                                "This problem is clearly underconstrained, so previous approaches have " \
-                                "either relied on significant user interaction or resulted in desaturated colorizations. " \
-                                "We propose a fully automatic approach that produces vibrant and realistic colorizations. " \
-                                "We embrace the underlying uncertainty of the problem by posing it as a classification task " \
-                                "and use class-rebalancing at training time to increase the diversity of colors in the result. " \
-                                "The system is implemented as a feed-forward pass in a CNN at test time and is trained on over a million color images. " \
-                                "We evaluate our algorithm using a “colorization Turing test,” asking human participants to choose between a generated and ground truth color image. " \
-                                "Our method successfully fools humans on 32 % of the trials, significantly higher than previous methods. " \
-                                "Moreover, we show that colorization can be a powerful pretext task for self-supervised feature learning, " \
-                                "acting as a cross-channel encoder. This approach results in state-of-the-art performance on several feature learning benchmarks."
         self.info.authors = "Richard Zhang, Phillip Isola, Alexei A. Efros"
         self.info.article = "Colorful Image Colorization"
         self.info.journal = "ECCV"
         self.info.year = 2016
         self.info.documentation_link = "https://richzhang.github.io/colorization/"
         self.info.license = "BSD 2-Clause 'Simplified' License"
-        self.info.repository = "https://github.com/richzhang/colorization"
+        self.info.repository = "https://github.com/Ikomia-hub/infer_colorful_image_colorization"
+        self.info.original_repository = "https://github.com/richzhang/colorization"
         # relative path -> as displayed in Ikomia application process tree
         self.info.path = "Plugins/Python/Colorization"
         self.info.icon_path = "icon/icon.png"
