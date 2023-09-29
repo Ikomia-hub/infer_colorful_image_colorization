@@ -169,6 +169,8 @@ class ColorfulImageColorizationFactory(dataprocess.CTaskFactory):
         self.info.icon_path = "icon/icon.png"
         self.info.keywords = "deep,learning,caffe,CNN,photo"
         self.info.version = "1.2.0"
+        self.info.algo_type = core.AlgoType.INFER
+        self.info.algo_tasks = "COLORIZATION"
 
     def create(self, param=None):
         # Create process object
